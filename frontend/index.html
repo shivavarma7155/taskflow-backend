@@ -3,85 +3,236 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TaskFlow — Team Workspace</title>
+  <title>SyncBoard — Team Workspace</title>
+  <!-- Feather Icons for UI consistency -->
+  <script src="https://unpkg.com/feather-icons"></script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="navbar">
-    <div class="logo">⚡ TaskFlow</div>
-    <div class="nav-controls" id="auth-controls">
-      <!-- Login Inputs -->
-      <div id="login-section" style="display: flex; gap: 0.5rem; align-items: center;">
-        <input type="text" id="login-username" placeholder="Username" style="padding: 0.4rem; border: 1px solid #cbd5e1; border-radius: 4px;" />
-        <input type="password" id="login-password" placeholder="Password" style="padding: 0.4rem; border: 1px solid #cbd5e1; border-radius: 4px;" />
-        <button id="login-btn" class="btn primary">Login</button>
+  <div class="app-layout">
+    <!-- 1. Left Primary Icon Bar -->
+    <aside class="mini-sidebar">
+      <div class="logo-box">
+        <div class="logo-icon"><i data-feather="box"></i></div>
       </div>
-      <!-- User info & Action -->
-      <div id="user-section" style="display: none; align-items: center; gap: 1rem;">
-        <span id="user-display" style="font-weight: 600; font-size: 0.9rem;"></span>
-        <button id="open-modal-btn" class="btn primary">+ New Task</button>
-        <button id="logout-btn" style="background: none; border: 1px solid #cbd5e1; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer;">Logout</button>
+      <nav class="mini-nav">
+        <a href="#" class="nav-item"><i data-feather="home"></i></a>
+        <a href="#" class="nav-item active"><i data-feather="layers"></i></a>
+        <a href="#" class="nav-item"><i data-feather="check-square"></i></a>
+        <a href="#" class="nav-item"><i data-feather="users"></i></a>
+        <a href="#" class="nav-item"><i data-feather="file-text"></i></a>
+        <a href="#" class="nav-item"><i data-feather="tool"></i></a>
+      </nav>
+      <div class="mini-footer">
+        <a href="#" class="nav-item"><i data-feather="info"></i></a>
+        <a href="#" class="nav-item"><i data-feather="headphones"></i></a>
+        <a href="#" class="nav-item"><i data-feather="settings"></i></a>
       </div>
-    </div>
-  </header>
+    </aside>
 
-  <main class="kanban-container">
-    <section class="column" id="col-TODO">
-      <div class="column-header">
-        <span class="dot todo"></span>
-        <h2>To Do</h2>
-        <span class="counter" id="count-TODO">0</span>
+    <!-- 2. Secondary Navigation Panel (Workspaces & Teams) -->
+    <aside class="panel-sidebar">
+      <div class="workspace-header">
+        <div>
+          <h4>Team Workspace</h4>
+          <span class="subtext">Syncboard.Company</span>
+        </div>
+        <i data-feather="chevron-down" class="subtext"></i>
       </div>
-      <div class="task-list" id="list-TODO"></div>
-    </section>
 
-    <section class="column" id="col-IN_PROGRESS">
-      <div class="column-header">
-        <span class="dot in-progress"></span>
-        <h2>In Progress</h2>
-        <span class="counter" id="count-IN_PROGRESS">0</span>
+      <div class="panel-section">
+        <div class="section-title">
+          <span>Project & Companies</span>
+          <i data-feather="plus" class="clickable"></i>
+        </div>
+        <ul class="tree-list">
+          <li><i data-feather="folder"></i> Graphic Design</li>
+          <li><i data-feather="folder"></i> Mobile App</li>
+          <li class="expanded">
+            <div class="tree-header">
+              <span><i data-feather="folder"></i> Website</span>
+              <i data-feather="chevron-up" class="subtext"></i>
+            </div>
+            <ul class="tree-sublist">
+              <li><i data-feather="triangle"></i> Company Website</li>
+              <li class="active-project"><i data-feather="layout"></i> E-Commerce Website</li>
+              <li><i data-feather="bookmark"></i> Landing Page Campaign</li>
+            </ul>
+          </li>
+          <li><i data-feather="folder"></i> Illustration Assets</li>
+          <li><i data-feather="folder"></i> User Research</li>
+          <li><i data-feather="folder"></i> Branding</li>
+          <li><i data-feather="folder"></i> Development</li>
+        </ul>
       </div>
-      <div class="task-list" id="list-IN_PROGRESS"></div>
-    </section>
 
-    <section class="column" id="col-REVIEW">
-      <div class="column-header">
-        <span class="dot review"></span>
-        <h2>Review</h2>
-        <span class="counter" id="count-REVIEW">0</span>
+      <div class="panel-section">
+        <div class="section-title">Categories</div>
+        <ul class="category-list">
+          <li><span class="dot-sm todo"></span> To Do <span class="badge" id="side-count-TODO">0</span></li>
+          <li><span class="dot-sm in-progress"></span> In Progress <span class="badge" id="side-count-IN_PROGRESS">0</span></li>
+          <li><span class="dot-sm review"></span> Review <span class="badge" id="side-count-REVIEW">0</span></li>
+          <li><span class="dot-sm completed"></span> Completed <span class="badge" id="side-count-COMPLETED">0</span></li>
+        </ul>
       </div>
-      <div class="task-list" id="list-REVIEW"></div>
-    </section>
 
-    <section class="column" id="col-COMPLETED">
-      <div class="column-header">
-        <span class="dot completed"></span>
-        <h2>Completed</h2>
-        <span class="counter" id="count-COMPLETED">0</span>
+      <div class="panel-section messages-section">
+        <div class="section-title">Team Members</div>
+        <ul class="member-list">
+          <li>
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Michael" class="avatar-sm" />
+            <div>
+              <p class="member-name">Michael Anderson</p>
+              <span class="subtext">UI/UX Designer</span>
+            </div>
+          </li>
+          <li>
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sophia" class="avatar-sm" />
+            <div>
+              <p class="member-name">Sophia Carter</p>
+              <span class="subtext">Graphic Designer</span>
+            </div>
+          </li>
+          <li>
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Daniel" class="avatar-sm" />
+            <div>
+              <p class="member-name">Daniel Johnson</p>
+              <span class="subtext">Frontend Dev</span>
+            </div>
+          </li>
+        </ul>
       </div>
-      <div class="task-list" id="list-COMPLETED"></div>
-    </section>
-  </main>
+    </aside>
+
+    <!-- 3. Main Board Viewport -->
+    <main class="main-viewport">
+      <!-- Top Utility Header -->
+      <header class="top-nav">
+        <div class="breadcrumbs">
+          <span>Project</span> &gt; <span>Website</span> &gt; <span class="current">E-Commerce Website</span>
+        </div>
+        <div class="user-profile">
+          <i data-feather="bell" class="icon-btn"></i>
+          <i data-feather="message-square" class="icon-btn"></i>
+          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jenno" class="avatar-md" />
+          <div class="profile-meta">
+            <span class="name" id="user-display">Loading...</span>
+            <span class="subtext" id="user-email">backend@taskflow.dev</span>
+          </div>
+          <button id="logout-btn" class="icon-btn" title="Logout"><i data-feather="log-out"></i></button>
+        </div>
+      </header>
+
+      <!-- Board Action Bar -->
+      <section class="board-action-bar">
+        <div class="title-cluster">
+          <div class="project-badge"><i data-feather="layout"></i></div>
+          <h1>E-Commerce Website</h1>
+        </div>
+        <div class="action-cluster">
+          <div class="avatar-stack">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" />
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jack" />
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka" />
+            <span class="avatar-stack-more">+9</span>
+          </div>
+          <button id="open-modal-btn" class="btn primary-gradient"><i data-feather="plus"></i> New Task</button>
+        </div>
+      </section>
+
+      <!-- Sub Navigation & Filter Strip -->
+      <div class="toolbar-strip">
+        <div class="view-toggles">
+          <button class="toggle-btn active"><i data-feather="columns"></i> Kanban</button>
+          <button class="toggle-btn"><i data-feather="grid"></i> Board</button>
+          <button class="toggle-btn"><i data-feather="list"></i> List</button>
+          <button class="toggle-btn"><i data-feather="calendar"></i> Calendar</button>
+        </div>
+        <div class="search-filter-box">
+          <div class="search-input">
+            <i data-feather="search"></i>
+            <input type="text" id="task-search-input" placeholder="Search..." oninput="handleSearch(this.value)" />
+          </div>
+          <button class="btn secondary-filter"><i data-feather="sliders"></i> Filter</button>
+        </div>
+      </div>
+
+      <!-- Kanban Columns -->
+      <div class="kanban-grid">
+        <!-- To Do Column -->
+        <div class="board-col" id="col-TODO">
+          <div class="col-head">
+            <div class="head-left">
+              <span class="dot-head todo"></span>
+              <h3>To Do</h3>
+              <span class="head-pill" id="count-TODO">0</span>
+            </div>
+            <i data-feather="plus" class="head-add clickable" onclick="openCreateModalWithStatus('TODO')"></i>
+          </div>
+          <div class="cards-area" id="list-TODO"></div>
+        </div>
+
+        <!-- In Progress Column -->
+        <div class="board-col" id="col-IN_PROGRESS">
+          <div class="col-head">
+            <div class="head-left">
+              <span class="dot-head in-progress"></span>
+              <h3>In Progress</h3>
+              <span class="head-pill" id="count-IN_PROGRESS">0</span>
+            </div>
+            <i data-feather="plus" class="head-add clickable" onclick="openCreateModalWithStatus('IN_PROGRESS')"></i>
+          </div>
+          <div class="cards-area" id="list-IN_PROGRESS"></div>
+        </div>
+
+        <!-- Review Column -->
+        <div class="board-col" id="col-REVIEW">
+          <div class="col-head">
+            <div class="head-left">
+              <span class="dot-head review"></span>
+              <h3>Review</h3>
+              <span class="head-pill" id="count-REVIEW">0</span>
+            </div>
+            <i data-feather="plus" class="head-add clickable" onclick="openCreateModalWithStatus('REVIEW')"></i>
+          </div>
+          <div class="cards-area" id="list-REVIEW"></div>
+        </div>
+
+        <!-- Completed Column -->
+        <div class="board-col" id="col-COMPLETED">
+          <div class="col-head">
+            <div class="head-left">
+              <span class="dot-head completed"></span>
+              <h3>Complete</h3>
+              <span class="head-pill" id="count-COMPLETED">0</span>
+            </div>
+            <i data-feather="plus" class="head-add clickable" onclick="openCreateModalWithStatus('COMPLETED')"></i>
+          </div>
+          <div class="cards-area" id="list-COMPLETED"></div>
+        </div>
+      </div>
+    </main>
+  </div>
 
   <!-- Create Task Modal -->
   <div id="task-modal" class="modal hidden">
-    <div class="modal-content">
-      <div class="modal-header">
+    <div class="modal-card">
+      <div class="modal-head">
         <h3>Create New Task</h3>
-        <button id="close-modal-btn" class="close-btn">&times;</button>
+        <button id="close-modal-btn" class="close-x">&times;</button>
       </div>
       <form id="task-form">
-        <div class="form-group">
-          <label for="task-title">Title</label>
-          <input type="text" id="task-title" required placeholder="e.g. Implement login API" />
+        <div class="field-wrap">
+          <label>Title</label>
+          <input type="text" id="task-title" required placeholder="e.g., Homepage UI Design Draft" />
         </div>
-        <div class="form-group">
-          <label for="task-desc">Description</label>
-          <textarea id="task-desc" rows="3" placeholder="Task details..."></textarea>
+        <div class="field-wrap">
+          <label>Description</label>
+          <textarea id="task-desc" rows="3" placeholder="Brief description of requirements..."></textarea>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="task-status">Status</label>
+        <div class="field-grid">
+          <div class="field-wrap">
+            <label>Status</label>
             <select id="task-status">
               <option value="TODO">To Do</option>
               <option value="IN_PROGRESS">In Progress</option>
@@ -89,8 +240,8 @@
               <option value="COMPLETED">Completed</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="task-priority">Priority</label>
+          <div class="field-wrap">
+            <label>Priority</label>
             <select id="task-priority">
               <option value="LOW">Low</option>
               <option value="MEDIUM" selected>Medium</option>
@@ -99,11 +250,14 @@
             </select>
           </div>
         </div>
-        <button type="submit" class="btn primary full-width">Create Task</button>
+        <button type="submit" class="btn primary-gradient full-btn">Save Task</button>
       </form>
     </div>
   </div>
 
   <script src="app.js"></script>
+  <script>
+    feather.replace();
+  </script>
 </body>
 </html>
