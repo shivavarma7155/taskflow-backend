@@ -7,10 +7,22 @@ from tasks.models import Task
 
 class TaskAPITests(APITestCase):
     def setUp(self):
-        # Create users
-        self.admin_user = User.objects.create_user(username="adminuser", password="password123")
-        self.dev_user = User.objects.create_user(username="devuser", password="password123")
-        self.outsider = User.objects.create_user(username="outsider", password="password123")
+        # Explicit unique emails avoid the unique key constraint violation
+        self.admin_user = User.objects.create_user(
+            username="adminuser", 
+            email="admin@test.com", 
+            password="password123"
+        )
+        self.dev_user = User.objects.create_user(
+            username="devuser", 
+            email="dev@test.com", 
+            password="password123"
+        )
+        self.outsider = User.objects.create_user(
+            username="outsider", 
+            email="outsider@test.com", 
+            password="password123"
+        )
 
         # Create team and memberships
         self.team = Team.objects.create(name="Core Team", created_by=self.admin_user)
