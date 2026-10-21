@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow — Team Workspace</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">⚡ TaskFlow</div>
+    <div class="nav-controls" id="auth-controls">
+      <!-- Login Inputs -->
+      <div id="login-section" style="display: flex; gap: 0.5rem; align-items: center;">
+        <input type="text" id="login-username" placeholder="Username" style="padding: 0.4rem; border: 1px solid #cbd5e1; border-radius: 4px;" />
+        <input type="password" id="login-password" placeholder="Password" style="padding: 0.4rem; border: 1px solid #cbd5e1; border-radius: 4px;" />
+        <button id="login-btn" class="btn primary">Login</button>
+      </div>
+      <!-- User info & Action -->
+      <div id="user-section" style="display: none; align-items: center; gap: 1rem;">
+        <span id="user-display" style="font-weight: 600; font-size: 0.9rem;"></span>
+        <button id="open-modal-btn" class="btn primary">+ New Task</button>
+        <button id="logout-btn" style="background: none; border: 1px solid #cbd5e1; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer;">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="kanban-container">
+    <section class="column" id="col-TODO">
+      <div class="column-header">
+        <span class="dot todo"></span>
+        <h2>To Do</h2>
+        <span class="counter" id="count-TODO">0</span>
+      </div>
+      <div class="task-list" id="list-TODO"></div>
+    </section>
+
+    <section class="column" id="col-IN_PROGRESS">
+      <div class="column-header">
+        <span class="dot in-progress"></span>
+        <h2>In Progress</h2>
+        <span class="counter" id="count-IN_PROGRESS">0</span>
+      </div>
+      <div class="task-list" id="list-IN_PROGRESS"></div>
+    </section>
+
+    <section class="column" id="col-REVIEW">
+      <div class="column-header">
+        <span class="dot review"></span>
+        <h2>Review</h2>
+        <span class="counter" id="count-REVIEW">0</span>
+      </div>
+      <div class="task-list" id="list-REVIEW"></div>
+    </section>
+
+    <section class="column" id="col-COMPLETED">
+      <div class="column-header">
+        <span class="dot completed"></span>
+        <h2>Completed</h2>
+        <span class="counter" id="count-COMPLETED">0</span>
+      </div>
+      <div class="task-list" id="list-COMPLETED"></div>
+    </section>
+  </main>
+
+  <!-- Create Task Modal -->
+  <div id="task-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Create New Task</h3>
+        <button id="close-modal-btn" class="close-btn">&times;</button>
+      </div>
+      <form id="task-form">
+        <div class="form-group">
+          <label for="task-title">Title</label>
+          <input type="text" id="task-title" required placeholder="e.g. Implement login API" />
+        </div>
+        <div class="form-group">
+          <label for="task-desc">Description</label>
+          <textarea id="task-desc" rows="3" placeholder="Task details..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-status">Status</label>
+            <select id="task-status">
+              <option value="TODO">To Do</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="REVIEW">Review</option>
+              <option value="COMPLETED">Completed</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority">
+              <option value="LOW">Low</option>
+              <option value="MEDIUM" selected>Medium</option>
+              <option value="HIGH">High</option>
+              <option value="URGENT">Urgent</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn primary full-width">Create Task</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
